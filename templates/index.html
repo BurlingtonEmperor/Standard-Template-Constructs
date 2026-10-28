@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Standard Template Constructs</title>
+
+    <link href="{{ url_for('static', filename='index.css' )}}" type="text/css" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='prompt.png' )}}" type="text/css" rel="icon shortcut" />
+  </head>
+  <body>
+    <div class="console-wrapper">
+      <div class="console-frame">
+        
+        <header class="console-header">
+          <div class="header-left">
+            <span class="terminal-prompt">&gt;_</span>
+            <span class="heading">Standard Template Constructs</span>
+          </div>
+          <div class="header-right">
+            <span class="status-indicator online" id="mode-set">Mode: Agentic</span>
+          </div>
+        </header>
+
+        <!-- Main Output Stream -->
+        <main class="console-output" id="message-container">
+        </main>
+
+        <footer class="console-input-deck">
+          <form class="input-row-form" onsubmit="event.preventDefault();">
+            <span class="input-line-prompt">&gt;</span>
+            <textarea 
+              class="terminal-input" 
+              placeholder="What do you want to create?" 
+              rows="1"
+              id="chat-input"
+            ></textarea>
+            <button type="submit" class="execute-button" id="send-btn">
+              <span>EXEC</span>
+            </button>
+          </form>
+        </footer>
+
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='ui.js' )}}"></script>
+  </body>
+</html>
