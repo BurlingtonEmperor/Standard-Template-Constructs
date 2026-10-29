@@ -85,7 +85,6 @@ sendButton.onclick = function () {
 
   addUserOutput(chatInput.value);
   addAgentOutput("Cogitating response...", "");
-  chatInput.value = "";
 
   fetch ("/llm_comm", {
     method : "POST",
@@ -101,9 +100,11 @@ sendButton.onclick = function () {
   .then(data => {
     addAgentOutput("Returned Template", escapeHTML(data));
     isAwaitingResponse = 0;
+    chatInput.value = "";
   })
   .catch(error => {
     addAgentOutput("[Error] " + escapeHTML(String(error)));
     isAwaitingResponse = 0;
+    chatInput.value = "";
   });
 }
