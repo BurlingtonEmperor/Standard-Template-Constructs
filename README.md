@@ -90,10 +90,6 @@ One gotcha: templates are filled in with Python's `str.format`, so any real curl
 
 This is a work in progress, and a few things don't quite work yet. If you're picking the project up, here's where to start:
 
-- **Your message never reaches the server.** In `static/ui.js`, the input box is cleared just *before* its text is sent, so every request goes out empty. Grab the text into a variable first.
-- **New templates don't get saved.** `add_template` in `stc_database.py` is missing `self` and points at variables that don't exist. The error is caught quietly, so it fails without telling you.
-- **Agentic mode trips over itself.** `server.py` calls `self.stc.render_template(...)` in a function that has no `self`. It should just be `stc.render_template(...)`.
-- **One starter template can't be filled.** `api_route_handler` ends in `return {}`, which Python treats as a blank. It should be `return {{}}`.
 - If the AI forgets to fill a slot, rendering fails with a `KeyError` rather than degrading gracefully.
 - When a new template is generated, you only see *"Creating new template..."* and never the code it made.
 - If the network request fails, the chat shows the word `undefined` next to the error.

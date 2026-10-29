@@ -133,7 +133,7 @@ def llm_comm ():
   llm_output_json = response.choices[0].message.content
   slot_values = json.loads(llm_output_json)
 
-  final_code = self.stc.render_template(template_id, slot_values)
+  final_code = stc.render_template(template_id, slot_values)
   return final_code
 
 def begin_window():

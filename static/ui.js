@@ -83,8 +83,11 @@ sendButton.onclick = function () {
   }
   isAwaitingResponse = 1;
 
-  addUserOutput(chatInput.value);
+  let userText = chatInput.value;
+
+  addUserOutput(userText);
   addAgentOutput("Cogitating response...", "");
+  chatInput.value = "";
 
   fetch ("/llm_comm", {
     method : "POST",
@@ -92,7 +95,7 @@ sendButton.onclick = function () {
       "Content-Type" : "application/json"
     },
     body : JSON.stringify({
-      llm_prompt : chatInput.value,
+      llm_prompt : userText,
       rubric : localStorage.getItem("mode-set")
     })
   })
@@ -100,11 +103,9 @@ sendButton.onclick = function () {
   .then(data => {
     addAgentOutput("Returned Template", escapeHTML(data));
     isAwaitingResponse = 0;
-    chatInput.value = "";
   })
   .catch(error => {
     addAgentOutput("[Error] " + escapeHTML(String(error)));
     isAwaitingResponse = 0;
-    chatInput.value = "";
   });
 }

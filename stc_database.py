@@ -33,23 +33,21 @@ class StandardTemplateConstructs:
         corpus = [data["corpus"] for data in self.templates.values()]
         self.matrix = self.vectorizer.fit_transform(corpus)
 
-    def add_template(template_id, keywords, slots, code_template):
-        global TEMPLATES, TEMPLATE_IDS, CORPUS, MATRIX, VECTORIZER
-    
-        TEMPLATES[template_id] = {
+    def add_template(self, template_id, keywords, slots, code_template):
+        """Adds a new template to the database and updates the vector space."""
+        self.templates[template_id] = {
             "corpus": keywords,
             "slots": slots,
             "code": code_template
         }
-    
-        save_db(TEMPLATES)
-    
-        TEMPLATE_IDS = list(TEMPLATES.keys())
-        CORPUS = [data["corpus"] for data in TEMPLATES.values()]
-    
-        if CORPUS:
-            MATRIX = VECTORIZER.fit_transform(CORPUS)
-            print(f"[STC] Matrix re-fitted! Total templates in memory: {len(TEMPLATE_IDS)}")
+        
+        # Save compressed to disk using the instance method
+        self.save_db()
+        
+        # Re-fit the vectorizer matrix on the updated templates
+        self._fit_vectorizer()
+        
+        print(f"[STC] Matrix re-fitted! Total templates in memory: {len(self.template_ids)}")
 
     def offline_match(self, user_prompt):
         if self.matrix is None or not self.template_ids:
